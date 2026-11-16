@@ -1,0 +1,9 @@
+---
+- name: Prevent unused filesystems from loading
+  ansible.builtin.copy:
+    dest: "/etc/modprobe.d/cis-{{ item }}.conf"
+    content: "install {{ item }} /bin/true\n"
+    owner: root
+    group: root
+    mode: "0644"
+  loop: "{{ cis_hardening_unused_filesystems }}"

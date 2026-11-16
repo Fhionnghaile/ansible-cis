@@ -1,0 +1,34 @@
+---
+- name: Install password-quality library
+  ansible.builtin.package:
+    name: libpam-pwquality
+    state: present
+
+- name: Enforce password complexity (minlen, classes)
+  ansible.builtin.lineinfile:
+    path: /etc/security/pwquality.conf
+    regexp: "^#?\\s*{{ item.key }}\\b"
+    line: "{{ item.key }} = {{ item.value }}"
+    state: present
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - { key: minlen, value: "14" }
+    - { key: minclass, value: "4" }
+    - { key: dcredit, value: "-1" }
+    - { key: ucredit, value: "-1" }
+    - { key: ocredit, value: "-1" }
+    - { key: lcredit, value: "-1" }
+
+- name: Set password expiry policy in login.defs
+  ansible.builtin.lineinfile:
+    path: /etc/login.defs
+    regexp: "^{{ item.key }}\\b"
+    line: "{{ item.key }}\t{{ item.value }}"
+    state: present
+  loop:
+    - { key: PASS_MAX_DAYS, value: "90" }
+    - { key: PASS_MIN_DAYS, value: "7" }
+    - { key: PASS_WARN_AGE, value: "7" }

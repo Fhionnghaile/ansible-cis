@@ -1,0 +1,26 @@
+---
+# Toggle individual CIS control groups (all on by default).
+cis_hardening_disable_unused_filesystems: true
+cis_hardening_harden_sshd: true
+cis_hardening_password_policy: true
+cis_hardening_enable_auditd: true
+cis_hardening_network_sysctl: true
+cis_hardening_enable_firewall: true
+
+cis_hardening_unused_filesystems:
+  - cramfs
+  - freevxfs
+  - jffs2
+  - hfs
+  - hfsplus
+  - udf
+
+cis_hardening_sshd_settings:
+  PermitRootLogin: "no"
+  PermitEmptyPasswords: "no"
+  X11Forwarding: "no"
+  MaxAuthTries: "4"
+  ClientAliveInterval: "300"
+  ClientAliveCountMax: "0"
+  LoginGraceTime: "60"
+  Banner: /etc/issue.net

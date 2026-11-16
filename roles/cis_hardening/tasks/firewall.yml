@@ -1,0 +1,25 @@
+---
+- name: Install ufw
+  ansible.builtin.package:
+    name: ufw
+    state: present
+
+- name: Query ufw status
+  ansible.builtin.command: ufw status verbose
+  register: cis_hardening_ufw_status
+  changed_when: false
+
+- name: Set ufw default deny incoming
+  ansible.builtin.command: ufw --force default deny incoming
+  register: cis_hardening_ufw_deny
+  changed_when: "'Default incoming policy changed' in cis_hardening_ufw_deny.stdout"
+
+- name: Allow SSH through ufw (avoid lock-out)
+  ansible.builtin.command: ufw allow OpenSSH
+  register: cis_hardening_ufw_ssh
+  changed_when: "'Rule added' in cis_hardening_ufw_ssh.stdout or 'Rules updated' in cis_hardening_ufw_ssh.stdout"
+
+- name: Enable ufw
+  ansible.builtin.command: ufw --force enable
+  register: cis_hardening_ufw_enable
+  changed_when: "'Firewall is active' in cis_hardening_ufw_enable.stdout"

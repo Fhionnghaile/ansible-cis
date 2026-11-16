@@ -1,0 +1,9 @@
+## CIS audit rules (managed by Ansible - do not edit)
+-w /etc/passwd -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/group -p wa -k identity
+-w /etc/sudoers -p wa -k scope
+-w /etc/sudoers.d/ -p wa -k scope
+-w /var/log/auth.log -p wa -k logins
+-a always,exit -F arch=b64 -S execve -F euid=0 -k rootcmd
+-e 2

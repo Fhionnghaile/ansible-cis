@@ -1,0 +1,30 @@
+---
+- name: Disable unused filesystems (CIS 1.1)
+  ansible.builtin.import_tasks: filesystem.yml
+  when: cis_hardening_disable_unused_filesystems | bool
+  tags: [cis, filesystem]
+
+- name: Harden SSH daemon (CIS 5.2)
+  ansible.builtin.import_tasks: ssh.yml
+  when: cis_hardening_harden_sshd | bool
+  tags: [cis, ssh]
+
+- name: Enforce password policy (CIS 5.3/5.4)
+  ansible.builtin.import_tasks: auth.yml
+  when: cis_hardening_password_policy | bool
+  tags: [cis, auth]
+
+- name: Enable and configure auditd (CIS 4.1)
+  ansible.builtin.import_tasks: audit.yml
+  when: cis_hardening_enable_auditd | bool
+  tags: [cis, audit]
+
+- name: Apply network sysctl hardening (CIS 3.x)
+  ansible.builtin.import_tasks: sysctl.yml
+  when: cis_hardening_network_sysctl | bool
+  tags: [cis, sysctl]
+
+- name: Enable host firewall (CIS 3.5)
+  ansible.builtin.import_tasks: firewall.yml
+  when: cis_hardening_enable_firewall | bool
+  tags: [cis, firewall]

@@ -1,0 +1,44 @@
+---
+- name: CIS compliance report (read-only)
+  hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    report_path: /tmp/cis-compliance-report.md
+  tasks:
+    - name: Check SSH root login is disabled
+      ansible.builtin.command: sshd -T
+      register: sshd_effective
+      changed_when: false
+      failed_when: false
+
+    - name: Read sysctl ip_forward
+      ansible.builtin.command: sysctl -n net.ipv4.ip_forward
+      register: ipfwd
+      changed_when: false
+      failed_when: false
+
+    - name: Assemble control results
+      ansible.builtin.set_fact:
+        cis_results:
+          - name: "5.2 SSH PermitRootLogin no"
+            pass: "{{ 'permitrootlogin no' in (sshd_effective.stdout | default('') | lower) }}"
+          - name: "3.1 net.ipv4.ip_forward = 0"
+            pass: "{{ (ipfwd.stdout | default('1')) == '0' }}"
+
+    - name: Render the compliance report
+      ansible.builtin.copy:
+        dest: "{{ report_path }}"
+        mode: "0644"
+        content: |
+          # CIS compliance report - {{ inventory_hostname }} - {{ ansible_date_time.iso8601 }}
+
+          | control | result |
+          |---|---|
+          {% for c in cis_results %}
+          | {{ c.name }} | {{ 'PASS' if (c.pass | bool) else 'FAIL' }} |
+          {% endfor %}
+
+    - name: Show where the report landed
+      ansible.builtin.debug:
+        msg: "Compliance report written to {{ report_path }}"

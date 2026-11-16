@@ -1,0 +1,9 @@
+---
+- name: Deploy CIS network sysctl settings
+  ansible.builtin.template:
+    src: 99-cis-sysctl.conf.j2
+    dest: /etc/sysctl.d/99-cis.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload sysctl
