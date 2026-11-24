@@ -4,7 +4,7 @@
 > **Hardens a Linux host to the CIS Level-1 benchmark the same way, every time.**  
 > **Result:** ansible-lint clean at the production profile; idempotent — a second run reports changed=0.  
 > **Reproduce:** `ansible-lint   # idempotence: run the role twice; the 2nd run changes nothing`  
-> ![CI](https://github.com/fhionnghaile/ansible-cis/actions/workflows/ci.yml/badge.svg)
+> ![CI](https://github.com/fhionnghaile/ansible-cis/actions/workflows/ci.yml/badge.svg) [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Fhionnghaile/ansible-cis/badge)](https://scorecard.dev/viewer/?uri=github.com/Fhionnghaile/ansible-cis)
 >
 > **What this is worth:** Compliance you can apply to 1 host or 10,000 identically — and re-run safely on a schedule to stop drift.
 
