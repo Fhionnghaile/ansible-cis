@@ -11,6 +11,9 @@ An Ansible role that applies the same security hardening to one server or ten th
 ## 3. Demo
 Capture to record: two consecutive runs (the second showing changed=0) and the generated `/tmp/cis-compliance-report.md`.
 
+![Real test run, captured 24 Nov 2026](docs/test-run.svg)
+*Real output from this repository's own lint and syntax checks, captured 24 Nov 2026. The idempotence run needs a test host and is not shown.*
+
 ## 4. Run it yourself
 **Prerequisites:** Ansible, plus a disposable Debian/Ubuntu host or VM.
 
