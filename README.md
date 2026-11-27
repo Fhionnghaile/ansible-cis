@@ -6,7 +6,7 @@
 > **Reproduce:** `ansible-lint   # idempotence: run the role twice; the 2nd run changes nothing`  
 > ![CI](https://github.com/fhionnghaile/ansible-cis/actions/workflows/ci.yml/badge.svg) [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Fhionnghaile/ansible-cis/badge)](https://scorecard.dev/viewer/?uri=github.com/Fhionnghaile/ansible-cis)
 >
-> **What this is worth:** Compliance you can apply to 1 host or 10,000 identically — and re-run safely on a schedule to stop drift.
+> **What this is worth:** Applies the same CIS baseline to every host, and re-runs safely on a schedule (a second run changes nothing) to stop drift.
 
 
 An **idempotent** Ansible role that hardens a Debian/Ubuntu host to a **CIS Level 1** profile, plus a
